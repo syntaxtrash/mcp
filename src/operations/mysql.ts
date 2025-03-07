@@ -47,7 +47,7 @@ export async function listTables(): Promise<MCPResponse> {
 
 /**
  * Docu: Get the schema of a specific table and sample data
- * Last Updated Date: March 06, 2025
+ * Last Updated Date: March 07, 2025
  * @param {string} table - The table name
  * @returns {object} - The schema of the table and sample data
  * @author Aaron
@@ -55,8 +55,8 @@ export async function listTables(): Promise<MCPResponse> {
 export async function getTableInfo(table: string): Promise<MCPResponse> {
     const connection = await pool.getConnection();
     try {
-        const [schemaRows] = await connection.query<RowDataPacket[]>(`DESCRIBE ??`, [table]);
-        const [dataRows] = await connection.query<RowDataPacket[]>(`SELECT * FROM ?? LIMIT 3`, [table]);
+        const [schema_rows] = await connection.query<RowDataPacket[]>(`SHOW CREATE TABLE ??`, [table]);
+        const [data_rows] = await connection.query<RowDataPacket[]>(`SELECT * FROM ?? LIMIT 3`, [table]);
 
         return {
             content: [
@@ -65,8 +65,8 @@ export async function getTableInfo(table: string): Promise<MCPResponse> {
                     text: JSON.stringify(
                         {
                             table,
-                            schema: schemaRows,
-                            sample_data: dataRows,
+                            schema: schema_rows,
+                            sample_data: data_rows,
                         },
                         null,
                         JSON_INDENTATION

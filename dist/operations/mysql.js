@@ -43,7 +43,7 @@ export async function listTables() {
 }
 /**
  * Docu: Get the schema of a specific table and sample data
- * Last Updated Date: March 06, 2025
+ * Last Updated Date: March 07, 2025
  * @param {string} table - The table name
  * @returns {object} - The schema of the table and sample data
  * @author Aaron
@@ -51,16 +51,16 @@ export async function listTables() {
 export async function getTableInfo(table) {
     const connection = await pool.getConnection();
     try {
-        const [schemaRows] = await connection.query(`DESCRIBE ??`, [table]);
-        const [dataRows] = await connection.query(`SELECT * FROM ?? LIMIT 3`, [table]);
+        const [schema_rows] = await connection.query(`SHOW CREATE TABLE ??`, [table]);
+        const [data_rows] = await connection.query(`SELECT * FROM ?? LIMIT 3`, [table]);
         return {
             content: [
                 {
                     type: "text",
                     text: JSON.stringify({
                         table,
-                        schema: schemaRows,
-                        sample_data: dataRows,
+                        schema: schema_rows,
+                        sample_data: data_rows,
                     }, null, JSON_INDENTATION),
                 },
             ],
