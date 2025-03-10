@@ -10,8 +10,9 @@ A TypeScript-based server for interacting with MySQL databases using the Model C
     - Description: Returns the schema (via `SHOW CREATE TABLE`) and up to 3 sample rows for a specified table.
     - Input: `{ "table": "string" }` - The table name.
 - **`mysql-execute-query`**:
-    - Description: Executes a read-only SELECT query and returns the results.
-    - Input: `{ "query": "string" }` - The SELECT query.
+    - Description: Executes a `SELECT` query to retrieve data or an `INSERT` query to add data (e.g., dummy data), returning the results or affected rows.
+    - Input: `{ "query": "string" }` - The `SELECT` or `INSERT` query.
+    - Note: Only `SELECT` and `INSERT` queries are permitted for safety.
 
 
 ## Installation
@@ -168,7 +169,7 @@ Create a MySQL user with `SELECT`-only privileges instead of using the `root` ac
 
 3. **Grant SELECT Privileges**:
    ```sql
-   GRANT SELECT ON your_database.* TO 'mcp_user'@'localhost';
+   GRANT SELECT, INSERT ON your_database.* TO 'mcp_user'@'localhost';
    FLUSH PRIVILEGES;
    ```
 

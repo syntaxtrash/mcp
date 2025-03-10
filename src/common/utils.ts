@@ -1,10 +1,9 @@
-export function isSelectQuery(query: string): boolean {
-    const trimmed_query = query.trim().toUpperCase();
+export function isSafeQuery(query: string): boolean {
+    const trimmedQuery = query.trim().toUpperCase();
     return (
-        trimmed_query.startsWith("SELECT") &&
-        !trimmed_query.includes("INSERT") &&
-        !trimmed_query.includes("UPDATE") &&
-        !trimmed_query.includes("DELETE") &&
-        !trimmed_query.includes("DROP")
+        (trimmedQuery.startsWith("SELECT") || trimmedQuery.startsWith("INSERT")) &&
+        !trimmedQuery.includes("UPDATE") &&
+        !trimmedQuery.includes("DELETE") &&
+        !trimmedQuery.includes("DROP")
     );
 }

@@ -9,7 +9,7 @@ export const MySQLGetTableInfoSchema = z.object({
 });
 
 export const MySQLExecuteQuerySchema = z.object({
-    query: z.string().min(NON_EMPTY_VALUE).describe("The SELECT query to execute"),
+    query: z.string().min(NON_EMPTY_VALUE).describe("The SELECT or INSERT query to execute"),
 });
 
 export const EnvSchema = z.object({
