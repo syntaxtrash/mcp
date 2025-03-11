@@ -1,7 +1,7 @@
-import mysql, { RowDataPacket } from "mysql2/promise";
+import mysql, { RowDataPacket, ResultSetHeader } from "mysql2/promise";
 
-import { FIRST_VALUE_INDEX, JSON_INDENTATION } from "../common/constants.js";
-import { isSelectQuery } from "../common/utils.js";
+import { FIRST_VALUE_INDEX, JSON_INDENTATION, NO_AFFECTED_ROWS } from "../common/constants.js";
+import { isSafeQuery } from "../common/utils.js";
 import { MCPResponse } from "../common/types.js";
 import { env } from "../common/env.js";
 /**
@@ -47,7 +47,7 @@ export async function listTables(): Promise<MCPResponse> {
 
 /**
  * Docu: Get the schema of a specific table and sample data
- * Last Updated Date: March 06, 2025
+ * Last Updated Date: March 07, 2025
  * @param {string} table - The table name
  * @returns {object} - The schema of the table and sample data
  * @author Aaron
@@ -55,8 +55,8 @@ export async function listTables(): Promise<MCPResponse> {
 export async function getTableInfo(table: string): Promise<MCPResponse> {
     const connection = await pool.getConnection();
     try {
-        const [schemaRows] = await connection.query<RowDataPacket[]>(`DESCRIBE ??`, [table]);
-        const [dataRows] = await connection.query<RowDataPacket[]>(`SELECT * FROM ?? LIMIT 3`, [table]);
+        const [schema_rows] = await connection.query<RowDataPacket[]>(`SHOW CREATE TABLE ??`, [table]);
+        const [data_rows] = await connection.query<RowDataPacket[]>(`SELECT * FROM ?? LIMIT 3`, [table]);
 
         return {
             content: [
@@ -65,8 +65,8 @@ export async function getTableInfo(table: string): Promise<MCPResponse> {
                     text: JSON.stringify(
                         {
                             table,
-                            schema: schemaRows,
-                            sample_data: dataRows,
+                            schema: schema_rows,
+                            sample_data: data_rows,
                         },
                         null,
                         JSON_INDENTATION
@@ -85,23 +85,30 @@ export async function getTableInfo(table: string): Promise<MCPResponse> {
 
 /**
  * Docu: Execute a SELECT query and return the results
- * Last Updated Date: March 06, 2025
+ * Last Updated Date: March 10, 2025
  * @param {string} query - The SELECT query to execute
  * @returns {object} - The results of the query
  * @author Aaron
  */
 export async function executeQuery(query: string): Promise<MCPResponse> {
-    if (!isSelectQuery(query)) {
-        throw new Error("Only SELECT queries are allowed for safety");
+    if (!isSafeQuery(query)) {
+        throw new Error("Only SELECT and INSERT queries are allowed for safety");
     }
     const connection = await pool.getConnection();
     try {
-        const [rows] = await connection.query<RowDataPacket[]>(query);
+        const [result] = await connection.query<RowDataPacket[] | ResultSetHeader>(query);
         return {
             content: [
                 {
                     type: "text",
-                    text: JSON.stringify({ result: rows }, null, JSON_INDENTATION),
+                    text: JSON.stringify(
+                        {
+                            result: result,
+                            affectedRows: "affectedRows" in result ? result.affectedRows : NO_AFFECTED_ROWS,
+                        },
+                        null,
+                        JSON_INDENTATION
+                    ),
                 },
             ],
         };

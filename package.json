@@ -1,6 +1,6 @@
 {
-  "name": "mcp",
-  "version": "1.0.0",
+  "name": "@syntaxtrash/mcp",
+  "version": "1.0.3",
   "description": "",
   "main": "dist/index.js",
   "type": "module",
@@ -15,7 +15,7 @@
     "dev": "concurrently \"npm run build:watch\" \"npm run start:watch\""
   },
   "keywords": [],
-  "author": "",
+  "author": "Aaron",
   "license": "ISC",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.6.1",
@@ -32,5 +32,11 @@
     "eslint": "^8.57.0",
     "nodemon": "^3.1.9",
     "typescript": "^5.8.2"
+  },
+  "files": [
+    "dist/**/*"
+  ],
+  "publishConfig": {
+    "access": "public"
   }
 }

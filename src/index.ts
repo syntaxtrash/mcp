@@ -23,7 +23,7 @@ const server = new Server(
 
 /**
  * Docu: List all tables in the database
- * Last Updated Date: March 06, 2025
+ * Last Updated Date: March 10, 2025
  * @returns {object} - The list of tables in the database
  * @author Aaron
  */
@@ -32,7 +32,7 @@ server.setRequestHandler(ListToolsRequestSchema, () => {
         tools: [
             {
                 name: "mysql-list-tables",
-                description: "asdf Lists all tables in the MySQL database. Pass an empty object or omit arguments.",
+                description: "Lists all tables in the MySQL database. Pass an empty object or omit arguments.",
                 inputSchema: zodToJsonSchema(MySQLListTablesSchema),
             },
             {
@@ -42,7 +42,7 @@ server.setRequestHandler(ListToolsRequestSchema, () => {
             },
             {
                 name: "mysql-execute-query",
-                description: "Executes a read-only SELECT query on the MySQL database and returns the results.",
+                description: "Executes a SELECT or INSERT query on the MySQL database and returns the results.",
                 inputSchema: zodToJsonSchema(MySQLExecuteQuerySchema),
             }
         ],
