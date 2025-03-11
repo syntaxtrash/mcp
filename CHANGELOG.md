@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [1.0.3] - March 11, 2025 Manila Time
+## [1.0.4] - March 11, 2025 Manila Time
 ### Changed
 - Updated `mysql-execute-query` tool description in `src/index.ts` to "Executes a SELECT, INSERT, UPDATE, or DELETE query on the MySQL database and returns the results or affected rows."
 - Made `MYSQL_PASSWORD` optional in `EnvSchema` (`src/common/types.ts`), allowing password-less MySQL connections.
