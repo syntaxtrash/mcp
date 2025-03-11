@@ -38,8 +38,6 @@ To integrate with a Node.js-based MCP client: [cursor](https://docs.cursor.com/c
   }
 }
 ```
-
-- Replace `/absolute/path/to/mcp-main` with the full path to this repository.
 - Update `<your-username>`, `<your-password>`, and `<your-database>` with your MySQL credentials.
 
 ### Docker
