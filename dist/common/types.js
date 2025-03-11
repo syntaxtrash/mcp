@@ -11,7 +11,7 @@ export const EnvSchema = z.object({
     MYSQL_HOST: z.string().min(NON_EMPTY_VALUE, "MYSQL_HOST is required"),
     MYSQL_PORT: z.coerce.number().optional().default(DEFAULT_DB_PORT),
     MYSQL_USER: z.string().min(NON_EMPTY_VALUE, "MYSQL_USER is required"),
-    MYSQL_PASSWORD: z.string().min(NON_EMPTY_VALUE, "MYSQL_PASSWORD is required"),
+    MYSQL_PASSWORD: z.string().optional().default(""),
     MYSQL_DATABASE: z.string().min(NON_EMPTY_VALUE, "MYSQL_DATABASE is required"),
 });
 export const MCPResponseSchema = z.object({

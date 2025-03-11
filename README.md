@@ -15,24 +15,6 @@ A TypeScript-based server for interacting with MySQL databases using the Model C
     - Note: Only `SELECT`, `INSERT`, `UPDATE`, and `DELETE` queries are permitted for safety; `DROP` queries are blocked.
 
 
-## Installation
-
-1. **Clone the Repository**:
-   ```bash
-   git clone <repository-url>
-   cd mcp-main
-   ```
-
-2. **Install Dependencies**:
-   ```bash
-   npm install
-   ```
-
-3. **Build the Project**:
-   ```bash
-   npm run build
-   ```
-
 ## Integration
 
 ### Node.js
@@ -43,8 +25,8 @@ To integrate with a Node.js-based MCP client: [cursor](https://docs.cursor.com/c
 {
   "mcpServers": {
     "mcp": {
-      "command": "npm",
-      "args": ["start", "--prefix", "/absolute/path/to/mcp-main"],
+      "command": "npx",
+      "args": ["-y", "@syntaxtrash/mcp"],
       "env": {
         "MYSQL_HOST": "localhost",
         "MYSQL_PORT": "3306",
@@ -184,7 +166,7 @@ Create a MySQL user with appropriate privileges instead of using the root accoun
    MYSQL_HOST=localhost
    MYSQL_PORT=3306
    MYSQL_USER=mcp_user
-   MYSQL_PASSWORD=secure_password
+   MYSQL_PASSWORD=secure_password # Optional; omit if no password is set
    MYSQL_DATABASE=your_database
    ```
 
