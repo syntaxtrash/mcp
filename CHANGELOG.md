@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.2] - March 11, 2025 Manila Time
+### Added
+- Support for `UPDATE` and `DELETE` queries in the `mysql-execute-query` tool, in addition to `SELECT` and `INSERT`.
+  - Updated `isSafeQuery` function in `src/common/utils.ts` to allow `UPDATE` and `DELETE` while still blocking `DROP`.
+  - Updated `MySQLExecuteQuerySchema` description in `src/common/types.ts` to reflect the new query types.
+
+### Changed
+- Updated `README.md` to document the expanded `mysql-execute-query` functionality and adjust MySQL user privileges in the security configuration.
+
 ## [1.0.1] - March 10, 2025 Manila Time
 ### Added
 - Support for `INSERT` queries in the `mysql-execute-query` tool, allowing users to create dummy data in the database.

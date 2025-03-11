@@ -1,6 +1,6 @@
 # MCP Server
 
-A TypeScript-based server for interacting with MySQL databases using the Model Context Protocol (MCP). Provides read-only tools to list tables, retrieve table schemas, and execute SELECT queries.
+A TypeScript-based server for interacting with MySQL databases using the Model Context Protocol (MCP). Provides tools to list tables, retrieve table schemas, and execute queries.
 
 ## Tools
 - **`mysql-list-tables`**:
@@ -10,9 +10,9 @@ A TypeScript-based server for interacting with MySQL databases using the Model C
     - Description: Returns the schema (via `SHOW CREATE TABLE`) and up to 3 sample rows for a specified table.
     - Input: `{ "table": "string" }` - The table name.
 - **`mysql-execute-query`**:
-    - Description: Executes a `SELECT` query to retrieve data or an `INSERT` query to add data (e.g., dummy data), returning the results or affected rows.
-    - Input: `{ "query": "string" }` - The `SELECT` or `INSERT` query.
-    - Note: Only `SELECT` and `INSERT` queries are permitted for safety.
+    - Description: Executes a `SELECT` query to retrieve data, an `INSERT` query to add data, an `UPDATE` query to modify data, or a `DELETE` query to remove data, returning the results or affected rows.
+    - Input: `{ "query": "string" }` - The `SELECT`, `INSERT`, `UPDATE`, or `DELETE` query.
+    - Note: Only `SELECT`, `INSERT`, `UPDATE`, and `DELETE` queries are permitted for safety; `DROP` queries are blocked.
 
 
 ## Installation
@@ -155,7 +155,7 @@ mcp-main/
 ## Security Configuration
 
 ### MySQL
-Create a MySQL user with `SELECT`-only privileges instead of using the `root` account:
+Create a MySQL user with appropriate privileges instead of using the root account:
 
 1. **Log in to MySQL as Root**:
    ```bash
@@ -167,9 +167,9 @@ Create a MySQL user with `SELECT`-only privileges instead of using the `root` ac
    CREATE USER 'mcp_user'@'localhost' IDENTIFIED BY 'secure_password';
    ```
 
-3. **Grant SELECT Privileges**:
+3. **Grant Privileges**:
    ```sql
-   GRANT SELECT, INSERT ON your_database.* TO 'mcp_user'@'localhost';
+   GRANT SELECT, INSERT, UPDATE, DELETE ON your_database.* TO 'mcp_user'@'localhost';
    FLUSH PRIVILEGES;
    ```
 
