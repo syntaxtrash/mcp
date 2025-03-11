@@ -35,7 +35,7 @@ server.setRequestHandler(ListToolsRequestSchema, () => {
             },
             {
                 name: "mysql-execute-query",
-                description: "Executes a SELECT or INSERT query on the MySQL database and returns the results.",
+                description: "Executes a SELECT, INSERT, UPDATE, or DELETE query on the MySQL database and returns the results or affected rows.",
                 inputSchema: zodToJsonSchema(MySQLExecuteQuerySchema),
             }
         ],
